@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vishal Plastics | Innovative Plastic Solutions</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    /* General Styles */
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      background-color: #f8f8f8;
+      color: #333;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Navbar Styles */
+    .navbar {
+      background-color: #1e1e1e;
+      padding: 1.2rem 0;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.7rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .nav-links {
+      list-style-type: none;
+      display: flex;
+    }
+
+    .nav-links li {
+      margin: 0 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #007bff;
+    }
+
+    .btn {
+      background-color: #007bff;
+      color: white;
+      padding: 0.8rem 1.2rem;
+      border-radius: 5px;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* Hero Section */
+    .hero {
+      background-color: #007bff;
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      margin-bottom: 30px;
+    }
+
+    .search-form {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+
+    .search-input {
+      padding: 0.75rem;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: none;
+      width: 300px;
+      margin-right: 10px;
+    }
+
+    .search-btn {
+      padding: 0.75rem 1.5rem;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    /* About Section */
+    .about {
+      padding: 60px 0;
+      background-color: #fff;
+      text-align: center;
+    }
+
+    .about h2 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .about p {
+      font-size: 1.2rem;
+      color: #555;
+    }
+
+    /* Services Section */
+    .services {
+      padding: 80px 0;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+
+    .services h2 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 40px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background-color: #fff;
+      padding: 30px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .service-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 15px;
+      font-weight: 600;
+    }
+
+    .service-card p {
+      font-size: 1rem;
+      color: #777;
+    }
+
+    /* Footer */
+    footer {
+      background-color: #1e1e1e;
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    /* Contact Popup */
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup-box {
+      background: white;
+      padding: 2rem;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .popup-box h2 {
+      margin-top: 0;
+      font-size: 24px;
+      font-weight: 600;
+    }
+
+    .popup-box form input,
+    .popup-box form textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .popup-box form button {
+      background-color: #007bff;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .popup-box form button:hover {
+      background-color: #0056b3;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="logo">Vishal Plastics</div>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="product.html">Products</a></li>
+        </ul>
+      </nav>
+      <div id="auth-section" class="login-register">
+        <!-- Dynamic login/logout button based on user status -->
+        <a id="login-btn" href="login.html" class="login-btn"><i class="fas fa-sign-in-alt"></i> Login</a>
+        <a id="logout-btn" href="#" class="login-btn" style="display: none;" onclick="logoutUser()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </div>
+      <a href="#" class="btn" onclick="openContact()">Contact Us</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Innovative Plastic Solutions for Every Industry</h1>
+      <p>Delivering quality, reliability, and precision since 1999.</p>
+      <form class="search-form" action="#services">
+        <input type="text" placeholder="Search products or services..." name="search" class="search-input" />
+        <button type="submit" class="search-btn">Search</button>
+      </form>
+      <a href="#services" class="hero-btn">Explore Services</a>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about" id="about">
+    <div class="container">
+      <h2>About Us</h2>
+      <p>Vishal Plastics specializes in the production of high-quality plastic components tailored to diverse industries. Our commitment to innovation, precision, and sustainability drives our manufacturing excellence.</p>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section class="services" id="services">
+    <div class="container">
+      <h2>Our Services</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <h3>Injection Moulding</h3>
+          <p>Precision-engineered plastic components for industrial and commercial use.</p>
+        </div>
+        <div class="service-card">
+          <h3>Blow Moulding</h3>
+          <p>Efficient production of hollow plastic products at scale.</p>
+        </div>
+        <div class="service-card">
+          <h3>Custom Tooling</h3>
+          <p>Custom-designed tools to meet specific production needs.</p>
+        </div>
+        <div class="service-card">
+          <h3>Prototype Manufacturing</h3>
+          <p>From concept to reality with rapid prototyping services.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>© 2025 Vishal Plastics. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Contact Popup -->
+  <div id="contactPopup" class="popup-overlay">
+    <div class="popup-box">
+      <span class="close-btn" onclick="closeContact()">&times;</span>
+      <h2>Contact Us</h2>
+      <form action="#">
+        <input type="text" placeholder="Your Name" required />
+        <input type="email" placeholder="Your Email" required />
+        <textarea rows="4" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Simulate login state with a variable
+    let isLoggedIn = false;
+
+    // Update login/logout buttons based on login state
+    function updateAuthButtons() {
+      if (isLoggedIn) {
+        document.getElementById('login-btn').style.display = 'none';
+        document.getElementById('logout-btn').style.display = 'inline-block';
+      } else {
+        document.getElementById('login-btn').style.display = 'inline-block';
+        document.getElementById('logout-btn').style.display = 'none';
+      }
+    }
+
+    // Handle user logout
+    function logoutUser() {
+      isLoggedIn = false;
+      updateAuthButtons();
+    }
+
+    // Open contact form popup
+    function openContact() {
+      document.getElementById('contactPopup').style.display = 'flex';
+    }
+
+    // Close contact form popup
+    function closeContact() {
+      document.getElementById('contactPopup').style.display = 'none';
+    }
+
+    // Initial setup
+    updateAuthButtons();
+  </script>
+</body>
+</html>

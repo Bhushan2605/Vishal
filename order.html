@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Product | Vishal Plastics</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #eef2f5;
+    }
+
+    header, footer {
+      background-color: #1c1c1c;
+      color: white;
+      padding: 1rem 2rem;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    .product-name {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #007bff;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #444;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+
+    .confirmation {
+      text-align: center;
+      font-size: 1rem;
+      color: #28a745;
+      font-weight: 600;
+      margin-top: 1.5rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h2>Vishal Plastics</h2>
+  </header>
+
+  <div class="container">
+    <h2>Order Now</h2>
+    <div class="product-name" id="productName">Loading...</div>
+
+    <form id="orderForm">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" required />
+      </div>
+      <div class="form-group">
+        <label for="address">Shipping Address</label>
+        <textarea id="address" rows="3" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input type="number" id="quantity" min="1" value="1" required />
+      </div>
+      <button type="submit">Place Order</button>
+    </form>
+
+    <div class="confirmation" id="confirmationMessage">
+      Thank you! Redirecting to our product page...
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 Vishal Plastics. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const queryParams = new URLSearchParams(window.location.search);
+    const product = queryParams.get('product') || 'Unknown Product';
+    document.getElementById('productName').innerText = "Ordering: " + decodeURIComponent(product);
+
+    document.getElementById('orderForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Show confirmation message
+      const message = document.getElementById('confirmationMessage');
+      message.style.display = 'block';
+
+      // Redirect after delay
+      setTimeout(() => {
+        window.location.href = "product.html";
+      }, 2500); // 2.5 seconds delay
+    });
+  </script>
+
+</body>
+</html>
