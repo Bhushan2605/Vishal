@@ -2,156 +2,143 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Order Product | Vishal Plastics</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Order Product - HEALTH+</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #eef2f5;
+      font-family: Arial, sans-serif;
+      background: #f4f7f8;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
     }
-
-    header, footer {
-      background-color: #1c1c1c;
-      color: white;
-      padding: 1rem 2rem;
-      text-align: center;
-    }
-
     .container {
-      max-width: 600px;
-      margin: 2rem auto;
       background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+      padding: 25px 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #ccc;
+      max-width: 400px;
+      width: 100%;
     }
-
     h2 {
       text-align: center;
-      color: #333;
-      margin-bottom: 1rem;
+      margin-bottom: 20px;
     }
-
-    .product-name {
-      text-align: center;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #007bff;
-      margin-bottom: 2rem;
-    }
-
-    .form-group {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-group label {
+    label {
       display: block;
-      margin-bottom: 0.5rem;
-      font-weight: 500;
-      color: #444;
+      margin-top: 15px;
+      font-weight: bold;
     }
-
-    .form-group input,
-    .form-group textarea {
+    input, textarea {
       width: 100%;
-      padding: 0.8rem;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 6px;
       border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 1rem;
-      transition: border-color 0.3s;
+      font-size: 14px;
+      box-sizing: border-box;
     }
-
-    .form-group input:focus,
-    .form-group textarea:focus {
-      border-color: #007bff;
-      outline: none;
-    }
-
     button {
+      margin-top: 20px;
       width: 100%;
-      padding: 0.8rem;
-      background-color: #28a745;
-      color: white;
+      padding: 12px;
+      background: #1a73e8;
       border: none;
       border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
+      color: white;
+      font-size: 16px;
       cursor: pointer;
-      transition: background-color 0.3s;
     }
-
     button:hover {
-      background-color: #218838;
+      background: #0f5ec7;
     }
-
-    .confirmation {
-      text-align: center;
-      font-size: 1rem;
-      color: #28a745;
+    #status-msg {
+      margin-top: 15px;
       font-weight: 600;
-      margin-top: 1.5rem;
-      display: none;
+      text-align: center;
+    }
+    #status-msg.success {
+      color: green;
+    }
+    #status-msg.error {
+      color: red;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <h2>Vishal Plastics</h2>
-  </header>
-
   <div class="container">
-    <h2>Order Now</h2>
-    <div class="product-name" id="productName">Loading...</div>
+    <h2>Order Product</h2>
+    <form id="order-form">
+      <label for="name">Name *</label>
+      <input type="text" id="name" name="name" placeholder="Your full name" required />
 
-    <form id="orderForm">
-      <div class="form-group">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" required />
-      </div>
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" required />
-      </div>
-      <div class="form-group">
-        <label for="address">Shipping Address</label>
-        <textarea id="address" rows="3" required></textarea>
-      </div>
-      <div class="form-group">
-        <label for="quantity">Quantity</label>
-        <input type="number" id="quantity" min="1" value="1" required />
-      </div>
+      <label for="email">Email *</label>
+      <input type="email" id="email" name="email" placeholder="Your email" required />
+
+      <label for="product">Product *</label>
+      <input type="text" id="product" name="product" placeholder="Product name" required />
+
+      <label for="quantity">Quantity *</label>
+      <input type="number" id="quantity" name="quantity" placeholder="Quantity" min="1" required />
+
+      <label for="address">Shipping Address *</label>
+      <textarea id="address" name="address" rows="3" placeholder="Shipping address" required></textarea>
+
       <button type="submit">Place Order</button>
-    </form>
 
-    <div class="confirmation" id="confirmationMessage">
-      Thank you! Redirecting to our product page...
-    </div>
+      <p id="status-msg"></p>
+    </form>
   </div>
 
-  <footer>
-    <p>© 2025 Vishal Plastics. All rights reserved.</p>
-  </footer>
-
   <script>
-    const queryParams = new URLSearchParams(window.location.search);
-    const product = queryParams.get('product') || 'Unknown Product';
-    document.getElementById('productName').innerText = "Ordering: " + decodeURIComponent(product);
+    // Initialize EmailJS with your public key (replace with your actual public key)
+    emailjs.init("PVhxoJh_rI5Eu5hBH");
 
-    document.getElementById('orderForm').addEventListener('submit', function (e) {
+    const form = document.getElementById('order-form');
+    const statusMsg = document.getElementById('status-msg');
+
+    form.addEventListener('submit', function(e) {
       e.preventDefault();
 
-      // Show confirmation message
-      const message = document.getElementById('confirmationMessage');
-      message.style.display = 'block';
+      statusMsg.textContent = "";
+      statusMsg.className = "";
 
-      // Redirect after delay
-      setTimeout(() => {
-        window.location.href = "product.html";
-      }, 2500); // 2.5 seconds delay
+      // Collect form values
+      const name = form.name.value.trim();
+      const email = form.email.value.trim();
+      const product = form.product.value.trim();
+      const quantity = form.quantity.value.trim();
+      const address = form.address.value.trim();
+
+      if (!name || !email || !product || !quantity || !address) {
+        statusMsg.textContent = "Please fill in all required fields.";
+        statusMsg.className = "error";
+        return;
+      }
+
+      // Prepare parameters for EmailJS template
+      const templateParams = {
+        name: name,
+        email: email,
+        product: product,
+        quantity: quantity,
+        address: address
+      };
+
+      // Send email using EmailJS service and template (update with your own IDs)
+      emailjs.send('service_ispdaa4', 'template_07rv7n9', templateParams)
+        .then(function(response) {
+          console.log('SUCCESS!', response.status, response.text);
+          statusMsg.textContent = "Order placed successfully! Confirmation email sent.";
+          statusMsg.className = "success";
+          form.reset();
+        }, function(error) {
+          console.error('FAILED...', error);
+          statusMsg.textContent = "Failed to send email. Please try again later.";
+          statusMsg.className = "error";
+        });
     });
   </script>
 

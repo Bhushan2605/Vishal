@@ -21,6 +21,7 @@
     a {
       text-decoration: none;
       color: inherit;
+      cursor: pointer;
     }
 
     .container {
@@ -55,6 +56,7 @@
     .nav-links {
       list-style-type: none;
       display: flex;
+      align-items: center;
     }
 
     .nav-links li {
@@ -268,6 +270,22 @@
       cursor: pointer;
     }
 
+    /* Map Popup Specific Styles */
+    #mapPopup .popup-box {
+      padding: 0;
+      width: 90%;
+      max-width: 600px;
+      height: 450px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    #mapPopup iframe {
+      border: 0;
+      width: 100%;
+      height: 100%;
+    }
+
   </style>
 </head>
 <body>
@@ -282,6 +300,7 @@
           <li><a href="#about">About</a></li>
           <li><a href="#services">Services</a></li>
           <li><a href="product.html">Products</a></li>
+          <li><a href="#" onclick="openMapPopup()">Location</a></li>
         </ul>
       </nav>
       <div id="auth-section" class="login-register">
@@ -310,7 +329,7 @@
   <section class="about" id="about">
     <div class="container">
       <h2>About Us</h2>
-      <p>Vishal Plastics specializes in the production of high-quality plastic components tailored to diverse industries. Our commitment to innovation, precision, and sustainability drives our manufacturing excellence.</p>
+      <p>Vishal Plastics specializes in the production of high-quality plastic components tailored to diverse industries. Our commitment to innovation and sustainability makes us the preferred choice for clients worldwide.</p>
     </div>
   </section>
 
@@ -320,79 +339,107 @@
       <h2>Our Services</h2>
       <div class="services-grid">
         <div class="service-card">
-          <h3>Injection Moulding</h3>
-          <p>Precision-engineered plastic components for industrial and commercial use.</p>
+          <h3>Custom Plastic Molding</h3>
+          <p>Precision injection molding tailored to your specifications.</p>
         </div>
         <div class="service-card">
-          <h3>Blow Moulding</h3>
-          <p>Efficient production of hollow plastic products at scale.</p>
+          <h3>Plastic Fabrication</h3>
+          <p>Cutting-edge fabrication techniques for complex shapes.</p>
         </div>
         <div class="service-card">
-          <h3>Custom Tooling</h3>
-          <p>Custom-designed tools to meet specific production needs.</p>
+          <h3>Quality Inspection</h3>
+          <p>Thorough quality checks to ensure top standards.</p>
         </div>
         <div class="service-card">
-          <h3>Prototype Manufacturing</h3>
-          <p>From concept to reality with rapid prototyping services.</p>
+          <h3>Supply Chain Management</h3>
+          <p>Efficient logistics and inventory management.</p>
         </div>
       </div>
     </div>
   </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>© 2025 Vishal Plastics. All rights reserved.</p>
-    </div>
-  </footer>
 
   <!-- Contact Popup -->
   <div id="contactPopup" class="popup-overlay">
     <div class="popup-box">
       <span class="close-btn" onclick="closeContact()">&times;</span>
       <h2>Contact Us</h2>
-      <form action="#">
-        <input type="text" placeholder="Your Name" required />
-        <input type="email" placeholder="Your Email" required />
-        <textarea rows="4" placeholder="Your Message" required></textarea>
-        <button type="submit">Send Message</button>
+      <form id="contactForm">
+        <input type="text" placeholder="Name" id="name" required />
+        <input type="email" placeholder="Email" id="email" required />
+        <textarea placeholder="Message" id="message" rows="4" required></textarea>
+        <button type="submit">Send</button>
       </form>
     </div>
   </div>
 
+  <!-- Map Popup -->
+  <div id="mapPopup" class="popup-overlay">
+    <div class="popup-box">
+      <span class="close-btn" onclick="closeMapPopup()">&times;</span>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3768.8285127411744!2d72.87765531494962!3d19.076090987054827!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c63db521f38f%3A0x9e92c5ac4c6e8b41!2sMumbai!5e0!3m2!1sen!2sin!4v1684412762834!5m2!1sen!2sin"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+      ></iframe>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Vishal Plastics. All rights reserved.</p>
+  </footer>
+
   <script>
-    // Simulate login state with a variable
-    let isLoggedIn = false;
-
-    // Update login/logout buttons based on login state
-    function updateAuthButtons() {
-      if (isLoggedIn) {
-        document.getElementById('login-btn').style.display = 'none';
-        document.getElementById('logout-btn').style.display = 'inline-block';
-      } else {
-        document.getElementById('login-btn').style.display = 'inline-block';
-        document.getElementById('logout-btn').style.display = 'none';
-      }
-    }
-
-    // Handle user logout
-    function logoutUser() {
-      isLoggedIn = false;
-      updateAuthButtons();
-    }
-
-    // Open contact form popup
+    // Contact Popup functions
     function openContact() {
       document.getElementById('contactPopup').style.display = 'flex';
     }
-
-    // Close contact form popup
     function closeContact() {
       document.getElementById('contactPopup').style.display = 'none';
     }
 
-    // Initial setup
+    // Map Popup functions
+    function openMapPopup() {
+      document.getElementById('mapPopup').style.display = 'flex';
+    }
+    function closeMapPopup() {
+      document.getElementById('mapPopup').style.display = 'none';
+    }
+
+    // Login / Logout button toggle example (simplified)
+    const loginBtn = document.getElementById('login-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    // Simulated login status (replace with real auth logic)
+    let loggedIn = false;
+
+    function updateAuthButtons() {
+      if (loggedIn) {
+        loginBtn.style.display = 'none';
+        logoutBtn.style.display = 'inline-block';
+      } else {
+        loginBtn.style.display = 'inline-block';
+        logoutBtn.style.display = 'none';
+      }
+    }
+
+    function logoutUser() {
+      loggedIn = false;
+      updateAuthButtons();
+      alert('Logged out!');
+    }
+
+    // Initialize buttons on page load
     updateAuthButtons();
+
+    // Contact form submission handler (basic example)
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      alert('Thank you for contacting us, ' + document.getElementById('name').value + '!');
+      closeContact();
+      this.reset();
+    });
   </script>
+
 </body>
 </html>
